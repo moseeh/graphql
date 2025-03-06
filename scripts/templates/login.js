@@ -1,5 +1,6 @@
 export const login = () => `
 <div id="login-container">
+        <div id="error-message"></div>
         <h2>Login to continue</h2>
         <form id="login-form" action="/submit-login" method="post">
             <div class="form-group">
