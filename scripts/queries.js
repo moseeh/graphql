@@ -1,12 +1,21 @@
 export const query = `
     {
-      user {
-       id
-       login
-       attrs
-       auditRatio
-      }
+  user {
+    id
+    login
+    attrs
+    auditRatio
+    transactions(
+      where: {type: {_eq: "xp"}, eventId: {_eq: 75}}
+      order_by: {createdAt: desc}
+    ) {
+      eventId
+      path
+      amount
+      type
     }
+  }
+}
 `;
 
 export async function fetchGraphQL(token, variables = {}) {
