@@ -1,5 +1,5 @@
 import { login } from "./templates/login.js";
-import { dashboard , userData} from "./templates/dashboard.js";
+import { dashboard, userData } from "./templates/dashboard.js";
 import { handleLogin } from "./auth.js";
 import { fetchGraphQL } from "./queries.js";
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     response = await fetchGraphQL(token);
 
     currentUser = response.data.user[0];
-    console.log(currentUser)
+    console.log(currentUser);
     updateUI();
     // fetchUserProfile(token)
     //   .then((userData) => {
@@ -32,13 +32,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function updateUI() {
-  const userdata = document.getElementById("user-data")
-  const xpdata = document.getElementById("ar-data")
-  if (!userdata || !xpdata) {
-    return 
+  const userdata = document.getElementById("user-data");
+  const ardata = document.getElementById("ar-data");
+  const xpdata = document.getElementById("xp-data");
+  if (!userdata || !xpdata || !xpdata) {
+    return;
   }
-  userdata.innerHTML = userData(currentUser)
-  xpdata.innerHTML = currentUser.auditRatio.toFixed(1)
+  userdata.innerHTML = userData(currentUser);
+  ardata.innerHTML = currentUser.auditRatio.toFixed(1);
+  const totalXP = currentUser.transactions.reduce((totalXP, transaction) => {
+    return transaction.type === "xp" ? totalXP + transaction.amount : totalXP;
+  }, 0);
+  xpdata.innerHTML = formatXP(totalXP);
 }
 
 function renderLogin() {
@@ -60,4 +65,14 @@ function handleLogout() {
   localStorage.removeItem("authToken");
   currentUser = null;
   renderLogin();
+}
+
+function formatXP(bytes) {
+  if (bytes >= 1_000_000) {
+    return (bytes / 1_000_000).toFixed(2) + " MB";
+  } else if (bytes >= 1_000) {
+    return (bytes / 1_000).toFixed(2) + " KB";
+  } else {
+    return bytes + " Bytes";
+  }
 }
