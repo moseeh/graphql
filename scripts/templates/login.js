@@ -1,15 +1,13 @@
 export const login = () => `
 <div id="login-container">
         <div id="error-message"></div>
-        <h2>Login to continue</h2>
+        <h2>Login </h2>
         <form id="login-form" action="/submit-login" method="post">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter Your Username" required />
+                <input type="text" id="username" name="username" placeholder="username" required />
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter Your Password" required>
+                <input type="password" id="password" name="password" placeholder="password" required>
             </div>
             <button type="submit"> Login</button>
         </form>
