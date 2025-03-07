@@ -8,9 +8,12 @@ export const dashboard = () => `
             <h2>User Information</h2>
             <div id="user-data">Loading...</div>
         </section>
-        
+        <section id="auditRatio-section" class="profile-section">
+            <h2>Audit Ratio</h2>
+            <div id="ar-data">Loading...</div>
+        </section>
         <section id="xp-section" class="profile-section">
-            <h2>Experience Points</h2>
+            <h2>Experience Points(XP)</h2>
             <div id="xp-data">Loading...</div>
         </section>
         
