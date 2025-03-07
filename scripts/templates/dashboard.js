@@ -33,3 +33,12 @@ export const dashboard = () => `
         </section>
 
 `;
+
+
+export const userData = (user) => `
+    <div id="username">Username: ${user.login}</div>
+    <div id="email">Email: ${user.attrs.email}</div>
+    <div id="phone">Phone: ${user.attrs.phone}</div>
+    <div id="gender">Gender: ${user.attrs.gender}</div>
+    <div id="name">${user.attrs.firstName} ${user.attrs.lastName}</div>
+`
