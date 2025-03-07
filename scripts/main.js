@@ -33,10 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function updateUI() {
   const userdata = document.getElementById("user-data")
-  if (!userdata) {
+  const xpdata = document.getElementById("ar-data")
+  if (!userdata || !xpdata) {
     return 
   }
   userdata.innerHTML = userData(currentUser)
+  xpdata.innerHTML = currentUser.auditRatio.toFixed(1)
 }
 
 function renderLogin() {
