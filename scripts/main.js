@@ -1,19 +1,25 @@
 import { login } from "./templates/login.js";
-import { dashboard } from "./templates/dashboard.js";
+import { dashboard , userData} from "./templates/dashboard.js";
 import { handleLogin } from "./auth.js";
+import { fetchGraphQL } from "./queries.js";
 
 let app;
 let currentUser = null;
-
+let response;
 
 // initial page load
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   app = document.getElementById("app");
 
   //check if user is already logged in
   const token = localStorage.getItem("authToken");
   if (token) {
-    renderDashboard()
+    renderDashboard();
+    response = await fetchGraphQL(token);
+
+    currentUser = response.data.user[0];
+    console.log(currentUser)
+    updateUI();
     // fetchUserProfile(token)
     //   .then((userData) => {
     //     currentUser = userData;
@@ -24,6 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLogin();
   }
 });
+
+function updateUI() {
+  const userdata = document.getElementById("user-data")
+  if (!userdata) {
+    return 
+  }
+  userdata.innerHTML = userData(currentUser)
+}
 
 function renderLogin() {
   app.innerHTML = login();
@@ -36,12 +50,12 @@ function renderLogin() {
 function renderDashboard() {
   app.innerHTML = dashboard(currentUser);
 
-  const logoutBtn = document.getElementById("logout-btn")
-  logoutBtn.addEventListener("click", handleLogout)
+  const logoutBtn = document.getElementById("logout-btn");
+  logoutBtn.addEventListener("click", handleLogout);
 }
 
 function handleLogout() {
-  localStorage.removeItem('authToken');
+  localStorage.removeItem("authToken");
   currentUser = null;
   renderLogin();
 }
