@@ -1,5 +1,5 @@
 export const query = `
-    {
+   {
   user {
     id
     login
@@ -13,6 +13,10 @@ export const query = `
       path
       amount
       type
+    }
+    progresses(order_by: {createdAt: desc}) {
+      grade
+      path
     }
   }
 }

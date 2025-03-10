@@ -1,31 +1,28 @@
 import { login } from "./templates/login.js";
-import { dashboard, userData } from "./templates/dashboard.js";
+import { leftSidebar, userData } from "./templates/dashboard.js";
 import { handleLogin } from "./auth.js";
 import { fetchGraphQL } from "./queries.js";
 
 let app;
+let sidebar;
 let currentUser = null;
 let response;
 
 // initial page load
 document.addEventListener("DOMContentLoaded", async () => {
   app = document.getElementById("app");
+  sidebar = document.getElementById("sidebar")
 
   //check if user is already logged in
   const token = localStorage.getItem("authToken");
   if (token) {
-    renderDashboard();
     response = await fetchGraphQL(token);
-
+    
     currentUser = response.data.user[0];
+    
+    renderDashboard();
     console.log(currentUser);
     updateUI();
-    // fetchUserProfile(token)
-    //   .then((userData) => {
-    //     currentUser = userData;
-    //     renderDashboard();
-    //   })
-    //   .catch(() => renderLogin());
   } else {
     renderLogin();
   }
@@ -55,7 +52,8 @@ function renderLogin() {
 }
 
 function renderDashboard() {
-  app.innerHTML = dashboard(currentUser);
+  //app.innerHTML = dashboard(currentUser);
+  sidebar.innerHTML = leftSidebar(currentUser)
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
