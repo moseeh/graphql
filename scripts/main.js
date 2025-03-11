@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("authToken");
   if (token) {
     response = await fetchGraphQL(token);
-    console.log(response.data)
 
     currentUser = response.data.user[0];
+    console.log(currentUser);
     goProjects = response.data.goItems;
     jsProjects = response.data.jsItems;
     rustProjects = response.data.rustItems;
@@ -45,15 +45,21 @@ function updateUI(done) {
   const goProjectsRatio = document.getElementById("go-projects");
   const jsProjectsRatio = document.getElementById("js-projects");
   const rsProjectsRatio = document.getElementById("rs-projects");
+  const xpValue = document.getElementById("xp-metric-value");
 
-  if (!goProjectsRatio || !jsProjectsRatio || !rsProjectsRatio) return;
+  if (!goProjectsRatio || !jsProjectsRatio || !rsProjectsRatio || !xpValue)
+    return;
 
-  goProjectsRatio.innerHTML = done.go.ratio
-  jsProjectsRatio.innerHTML = done.js.ratio
-  rsProjectsRatio.innerHTML = done.rust.ratio
+  goProjectsRatio.innerHTML = done.go.ratio;
+  jsProjectsRatio.innerHTML = done.js.ratio;
+  rsProjectsRatio.innerHTML = done.rust.ratio;
   const totalXP = currentUser.transactions.reduce((totalXP, transaction) => {
     return transaction.type === "xp" ? totalXP + transaction.amount : totalXP;
   }, 0);
+
+  const [value, unit] = formatXP(totalXP);
+  xpValue.innerHTML =
+    value + '<span id="xp-metric-unit" class="metric-unit">' + unit + "</span>";
 }
 
 function renderLogin() {
@@ -74,7 +80,6 @@ function renderDashboard() {
   let done = doneProjectsCount();
 
   updateUI(done);
-  console.log(done);
 }
 
 function handleLogout() {
@@ -85,11 +90,11 @@ function handleLogout() {
 
 function formatXP(bytes) {
   if (bytes >= 1_000_000) {
-    return (bytes / 1_000_000).toFixed(2) + " MB";
+    return [(bytes / 1_000_000).toFixed(2), "MB"];
   } else if (bytes >= 1_000) {
-    return (bytes / 1_000).toFixed(2) + " KB";
+    return [(bytes / 1_000).toFixed(2), "KB"];
   } else {
-    return bytes + " Bytes";
+    return [bytes, "Bytes"];
   }
 }
 
