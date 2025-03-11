@@ -9,6 +9,11 @@ export const query = `
       where: {type: {_eq: "xp"}, eventId: {_eq: 75}}
       order_by: {createdAt: desc}
     ) {
+      object{
+        name
+        attrs
+        type
+      }
       eventId
       path
       amount
@@ -19,8 +24,30 @@ export const query = `
       path
     }
   }
+  goItems: object(
+    where: {_or: [{type: {_eq: "project"}, attrs: {_contains: {language: "Go"}}}, {type: {_eq: "piscine"}, name: {_ilike: "%Go%"}}]}
+    distinct_on: [name]
+  ) {
+    name
+    type
+  }
+  jsItems: object(
+    where: {_or: [{type: {_eq: "project"}, attrs: {_contains: {language: "JavaScript"}}}, {type: {_eq: "piscine"}, name: {_ilike: "%JS%"}}]}
+    distinct_on: [name]
+  ) {
+    name
+    type
+  }
+  rustItems: object(
+    where: {_or: [{type: {_eq: "project"}, attrs: {_contains: {language: "rust"}}}, {type: {_eq: "piscine"}, name: {_ilike: "%Rust%"}}]}
+    distinct_on: [name]
+  ) {
+    name
+    type
+  }
 }
 `;
+
 
 export async function fetchGraphQL(token, variables = {}) {
   try {
