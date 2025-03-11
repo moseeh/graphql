@@ -14,7 +14,6 @@ export const query = `
         attrs
         type
       }
-      eventId
       path
       amount
       type
@@ -22,7 +21,7 @@ export const query = `
     events(where: {eventId: {_eq: 75}}) {
       level
     }
-    progresses(order_by: {createdAt: desc}) {
+    progresses(where: {eventId: {_eq: 75}} order_by: {createdAt: desc}) {
       grade
       path
     }
