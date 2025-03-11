@@ -18,6 +18,15 @@ let goProjects;
 let jsProjects;
 let rustProjects;
 
+let rank = [
+  "Aspiring Developer",
+  "Beginner Developer",
+  "Apprentice Developer",
+  "Assistant Developer",
+  "Basic Developer",
+  "Junior Developer",
+];
+
 // initial page load
 document.addEventListener("DOMContentLoaded", async () => {
   app = document.getElementById("app");
@@ -46,8 +55,17 @@ function updateUI(done) {
   const jsProjectsRatio = document.getElementById("js-projects");
   const rsProjectsRatio = document.getElementById("rs-projects");
   const xpValue = document.getElementById("xp-metric-value");
+  const levelValue = document.getElementById("level-metric-value");
+  const gradeValue = document.getElementById("grade-metric-value");
 
-  if (!goProjectsRatio || !jsProjectsRatio || !rsProjectsRatio || !xpValue)
+  if (
+    !goProjectsRatio ||
+    !jsProjectsRatio ||
+    !rsProjectsRatio ||
+    !xpValue ||
+    !levelValue ||
+    !gradeValue
+  )
     return;
 
   goProjectsRatio.innerHTML = done.go.ratio;
@@ -56,10 +74,15 @@ function updateUI(done) {
   const totalXP = currentUser.transactions.reduce((totalXP, transaction) => {
     return transaction.type === "xp" ? totalXP + transaction.amount : totalXP;
   }, 0);
+  const totalGrade = currentUser.progresses.reduce((totalGrade, progress) => {
+    return progress.grade !== null ? totalGrade + progress.grade : totalGrade
+  }, 0)
+  gradeValue.innerHTML = totalGrade.toFixed(2)
 
   const [value, unit] = formatXP(totalXP);
   xpValue.innerHTML =
     value + '<span id="xp-metric-unit" class="metric-unit">' + unit + "</span>";
+  levelValue.innerHTML = currentUser.events[0].level + '<span id="xp-metric-unit" class="metric-unit">' + rank[Math.floor(currentUser.events[0].level)/10] + "</span>";
 }
 
 function renderLogin() {
