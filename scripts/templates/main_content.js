@@ -73,8 +73,7 @@ export const scores = () => `
                     </div>
                     XP Earned
                     </div>
-                    <div class="metric-value"> 1.05<span class="metric-unit">MB</span>
-                    </div>
+                    <div id="xp-metric-value" class="metric-value"></div>
                     <div class="metric-trend trend-up">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="18 15 12 9 6 15"></polyline>
@@ -97,7 +96,7 @@ export const scores = () => `
                     </div>
                     Experience Level
                     </div>
-                    <div class="metric-value">30</div>
+                    <div "level-metric-value" class="metric-value"></div>
                     <div class="metric-trend trend-up">
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="18 15 12 9 6 15"></polyline>
@@ -109,31 +108,31 @@ export const scores = () => `
                     </div>
                 </div>
       
-      <div class="metric-card green">
-        <div class="metric-label">
-          <div class="metric-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-          </div>
-          Performance Grade
+                <div class="metric-card green">
+                    <div class="metric-label">
+                    <div class="metric-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    Performance Grade
+                    </div>
+                    <div class="metric-value">
+                    79<span class="metric-unit">%</span>
+                    </div>
+                    <div class="metric-trend trend-up">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                    +3.5% improvement
+                    </div>
+                    <div class="progress-container">
+                    <div class="progress-bar" style="width: 79%;"></div>
+                    </div>
+                </div>
         </div>
-        <div class="metric-value">
-          79<span class="metric-unit">%</span>
-        </div>
-        <div class="metric-trend trend-up">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="18 15 12 9 6 15"></polyline>
-          </svg>
-          +3.5% improvement
-        </div>
-        <div class="progress-container">
-          <div class="progress-bar" style="width: 79%;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+     </div>
             <div class="chart-container">
                 <div class="chart-header">
                     <div class="chart-title">XP Progression</div>
