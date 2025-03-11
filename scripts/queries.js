@@ -19,6 +19,9 @@ export const query = `
       amount
       type
     }
+    events(where: {eventId: {_eq: 75}}) {
+      level
+    }
     progresses(order_by: {createdAt: desc}) {
       grade
       path
