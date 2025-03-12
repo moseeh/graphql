@@ -129,46 +129,7 @@ export const scores = () => `
                 </div>
         </div>
      </div>
-            <div class="chart-container">
-                <div class="chart-header">
-                    <div class="chart-title">XP Progression</div>
-                </div>
-
-                <div class="chart">
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 30%"></div>
-                    </div>
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 45%"></div>
-                    </div>
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 35%"></div>
-                    </div>
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 28%"></div>
-                    </div>
-                    <div class="chart-bar active" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 80%"></div>
-                    </div>
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 42%"></div>
-                    </div>
-                    <div class="chart-bar" style="height: 100%">
-                        <div class="chart-bar-fill" style="height: 38%"></div>
-                    </div>
-                </div>
-
-                <div class="chart-labels">
-                    <div class="chart-label">10 Dec</div>
-                    <div class="chart-label">12 Dec</div>
-                    <div class="chart-label">14 Dec</div>
-                    <div class="chart-label">16 Dec</div>
-                    <div class="chart-label">18 Dec</div>
-                    <div class="chart-label">20 Dec</div>
-                    <div class="chart-label">22 Dec</div>
-                </div>
-            </div>
-    </div>
+    <div id="chart-container"></div>
 `
 
 export const gridContainer = () => `
