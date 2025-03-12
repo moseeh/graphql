@@ -7,13 +7,14 @@ export const query = `
     auditRatio
     transactions(
       where: {type: {_eq: "xp"}, eventId: {_eq: 75}}
-      order_by: {createdAt: desc}
+      order_by: {createdAt: asc}
     ) {
       object{
         name
         attrs
         type
       }
+      createdAt
       path
       amount
       type
@@ -25,6 +26,10 @@ export const query = `
       grade
       path
     }
+  }
+  event(where: {path: {_eq: "/kisumu/module"}}) {
+    startAt
+    endAt
   }
   goItems: object(
     where: {_or: [{type: {_eq: "project"}, attrs: {_contains: {language: "Go"}}}, {type: {_eq: "piscine"}, name: {_ilike: "%Go%"}}]}
