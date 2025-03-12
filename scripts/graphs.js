@@ -140,11 +140,6 @@ export function generateXPGraph(transactions, courseStartDate, courseEndDate) {
     <!-- Main background -->
     <rect x="0" y="0" width="${svgWidth}" height="${svgHeight}" rx="10" ry="10" fill="url(#backgroundGradient)" />
 
-    <!-- Chart title and container -->
-    <text x="50" y="40" font-family="Segoe UI, sans-serif" font-size="22" font-weight="600" fill="#333">
-      XP Progression
-    </text>
-
     <!-- Chart area background -->
     <rect x="${margin.left - 70}" y="${margin.top - 10}" width="${
     chartWidth + 100

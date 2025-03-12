@@ -1,11 +1,6 @@
 export const topBar = () => `
     <div class="top-bar">
-            <div class="nav-links">
-                <a href="#" class="nav-link">Learning Paths</a>
-                <a href="#" class="nav-link dropdown">Create</a>
-                <a href="#" class="nav-link dropdown">Build</a>
-                <a href="#" class="nav-link dropdown">Thrive</a>
-            </div>
+            <div class="nav-links"></div>
 
             <div class="actions">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -15,7 +10,7 @@ export const topBar = () => `
                 </svg>
             </div>
     </div>
-    <div class="section-title">Course validation</div>
+    <div class="section-title">Done Projects</div>
 
 `
 
@@ -47,21 +42,9 @@ export const statsCards = () => `
     </div>
 `
 export const scores = () => `
+<div class="section-title">Perfomance Dashboard</div>
     <div class="scores">
         <div class="dashboard-container">
-            <div class="dashboard-header">
-                <h1 class="dashboard-title">Performance Dashboard</h1>
-                <div class="date-selector">
-                    <span>Period:</span>
-                    <select>
-                    <option>Last 7 days</option>
-                    <option>Last 30 days</option>
-                    <option>Last 90 days</option>
-                    <option>This year</option>
-                    </select>
-                </div>
-            </div>
-    
             <div class="metrics-container">
                 <div class="metric-card purple">
                     <div class="metric-label">
@@ -129,6 +112,7 @@ export const scores = () => `
                 </div>
         </div>
      </div>
+     <div class="section-title">XP Progression</div>
     <div id="chart-container"></div>
 `
 
