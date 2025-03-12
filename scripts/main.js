@@ -8,6 +8,7 @@ import {
   scores,
   gridContainer,
 } from "./templates/main_content.js";
+import { generateXPGraph } from "./graphs.js";
 
 let app;
 let sidebar;
@@ -39,10 +40,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     response = await fetchGraphQL(token);
 
     currentUser = response.data.user[0];
-    console.log(currentUser);
     goProjects = response.data.goItems;
     jsProjects = response.data.jsItems;
     rustProjects = response.data.rustItems;
+    
 
     renderDashboard();
   } else {
@@ -57,6 +58,7 @@ function updateUI(done) {
   const xpValue = document.getElementById("xp-metric-value");
   const levelValue = document.getElementById("level-metric-value");
   const gradeValue = document.getElementById("grade-metric-value");
+  const chartContainer = document.getElementById("chart-container")
 
   if (
     !goProjectsRatio ||
@@ -83,6 +85,7 @@ function updateUI(done) {
   xpValue.innerHTML =
     value + '<span id="xp-metric-unit" class="metric-unit">' + unit + "</span>";
   levelValue.innerHTML = currentUser.events[0].level + '<span id="xp-metric-unit" class="metric-unit">' + rank[Math.floor(currentUser.events[0].level)/10] + "</span>";
+  chartContainer.innerHTML = generateXPGraph(currentUser.transactions, response.data.event[0].startAt, response.data.event[0].endAt)
 }
 
 function renderLogin() {
