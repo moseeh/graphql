@@ -2,17 +2,14 @@ import { login } from "./templates/login.js";
 import { leftSidebar } from "./templates/dashboard.js";
 import { handleLogin } from "./auth.js";
 import { fetchGraphQL } from "./queries.js";
-import {
-  topBar,
-  statsCards,
-  scores,
-  gridContainer,
-} from "./templates/main_content.js";
+import { topBar, statsCards, scores } from "./templates/main_content.js";
 import { generateXPGraph } from "./graphs.js";
+import { skills, stats } from "./templates/rightSidebar.js";
 
 let app;
 let sidebar;
 let mainContent;
+let rightSidebar;
 let currentUser = null;
 let response;
 let goProjects;
@@ -33,6 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   app = document.getElementById("app");
   sidebar = document.getElementById("sidebar");
   mainContent = document.getElementById("main-content");
+  rightSidebar = document.getElementById("right-sidebar")
 
   //check if user is already logged in
   const token = localStorage.getItem("authToken");
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     goProjects = response.data.goItems;
     jsProjects = response.data.jsItems;
     rustProjects = response.data.rustItems;
-    
 
     renderDashboard();
   } else {
@@ -58,7 +55,7 @@ function updateUI(done) {
   const xpValue = document.getElementById("xp-metric-value");
   const levelValue = document.getElementById("level-metric-value");
   const gradeValue = document.getElementById("grade-metric-value");
-  const chartContainer = document.getElementById("chart-container")
+  const chartContainer = document.getElementById("chart-container");
 
   if (
     !goProjectsRatio ||
@@ -77,15 +74,23 @@ function updateUI(done) {
     return transaction.type === "xp" ? totalXP + transaction.amount : totalXP;
   }, 0);
   const totalGrade = currentUser.progresses.reduce((totalGrade, progress) => {
-    return progress.grade !== null ? totalGrade + progress.grade : totalGrade
-  }, 0)
-  gradeValue.innerHTML = totalGrade.toFixed(2)
+    return progress.grade !== null ? totalGrade + progress.grade : totalGrade;
+  }, 0);
+  gradeValue.innerHTML = totalGrade.toFixed(2);
 
   const [value, unit] = formatXP(totalXP);
   xpValue.innerHTML =
     value + '<span id="xp-metric-unit" class="metric-unit">' + unit + "</span>";
-  levelValue.innerHTML = currentUser.events[0].level + '<span id="xp-metric-unit" class="metric-unit">' + rank[Math.floor(currentUser.events[0].level)/10] + "</span>";
-  chartContainer.innerHTML = generateXPGraph(currentUser.transactions, response.data.event[0].startAt, response.data.event[0].endAt)
+  levelValue.innerHTML =
+    currentUser.events[0].level +
+    '<span id="xp-metric-unit" class="metric-unit">' +
+    rank[Math.floor(currentUser.events[0].level) / 10] +
+    "</span>";
+  chartContainer.innerHTML = generateXPGraph(
+    currentUser.transactions,
+    response.data.event[0].startAt,
+    response.data.event[0].endAt
+  );
 }
 
 function renderLogin() {
@@ -98,7 +103,8 @@ function renderLogin() {
 function renderDashboard() {
   //app.innerHTML = dashboard(currentUser);
   sidebar.innerHTML = leftSidebar(currentUser);
-  mainContent.innerHTML = topBar() + statsCards() + scores() + gridContainer();
+  mainContent.innerHTML = topBar() + statsCards() + scores();
+  rightSidebar.innerHTML = skills() + stats()
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
