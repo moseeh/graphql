@@ -5,18 +5,16 @@ export const query = `
     login
     attrs
     auditRatio
-    transactions(
-      where: {type: {_eq: "xp"}, eventId: {_eq: 75}}
-      order_by: {createdAt: asc}
-    ) {
+   transactions(where: {_and: [{eventId: {_eq: 75}}]}, order_by: {createdAt: asc}) {
       object{
         name
         attrs
         type
       }
-      createdAt
-      path
       amount
+      createdAt
+      eventId
+      path
       type
     }
      audits(
