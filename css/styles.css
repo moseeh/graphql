@@ -139,30 +139,27 @@ body {
   align-items: center;
 }
 
-.nav-links {
-  display: flex;
-  gap: 30px;
-}
-
-.nav-link {
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.nav-link.dropdown::after {
-  content: "▼";
-  font-size: 8px;
-  margin-left: 5px;
-  vertical-align: middle;
-}
 
 .actions {
   display: flex;
   gap: 15px;
   align-items: center;
 }
+.notification-container {
+  position: relative;
+  display: inline-block;
+}
 
+.notification-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: #0066ff;
+  border-radius: 50%;
+  display: none; /* Change to 'none' when there are no notifications */
+}
 .btn {
   padding: 10px 20px;
   border-radius: 50px;
