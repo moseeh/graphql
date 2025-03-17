@@ -1,4 +1,11 @@
-export function generateXPGraph(transactions, courseStartDate, courseEndDate) {
+export function generateXPGraph(
+  allTransactions,
+  courseStartDate,
+  courseEndDate
+) {
+  const transactions = allTransactions.filter(
+    (transaction) => transaction.type === "xp"
+  );
   const startDate = new Date(courseStartDate);
   const endDate = new Date(courseEndDate);
   const currentDate = new Date();
