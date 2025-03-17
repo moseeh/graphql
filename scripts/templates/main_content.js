@@ -9,6 +9,11 @@ export const topBar = () => `
         <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
       </svg>
       <div class="notification-indicator"></div>
+      <div class="notification-dropdown">
+        <h3>Audit Notifications</h3>
+        <div class="audit-items"></div>
+      </div>
+
     </div>
   </div>
 </div>
