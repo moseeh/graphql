@@ -28,7 +28,7 @@ let rank = [
 ];
 
 // initial page load
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
   app = document.getElementById("app");
   sidebar = document.getElementById("sidebar");
   mainContent = document.getElementById("main-content");
@@ -37,16 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   //check if user is already logged in
   const token = localStorage.getItem("authToken");
   if (token) {
-    response = await fetchGraphQL(token);
-
-    currentUser = response.data.user[0];
-    goProjects = response.data.goItems;
-    jsProjects = response.data.jsItems;
-    rustProjects = response.data.rustItems;
-    skillTypes = response.data.skill_types[0].transactions_aggregate.nodes;
-    audits = currentUser.audits;
-
-    renderDashboard();
+    renderDashboard(token);
   } else {
     renderLogin();
   }
@@ -113,37 +104,49 @@ function updateUI(done) {
     notificationIndicator.style.display = "none";
   }
 
-  PopulateAuditDropdown()
+  PopulateAuditDropdown();
 }
 function PopulateAuditDropdown() {
-  const auditItemsContainer = document.querySelector('.audit-items');
-  
+  const auditItemsContainer = document.querySelector(".audit-items");
+
   if (audits.length === 0) {
-    auditItemsContainer.innerHTML = '<p class="no-audits">No audit notifications</p>';
+    auditItemsContainer.innerHTML =
+      '<p class="no-audits">No audit notifications</p>';
     return;
   }
-  audits.forEach(audit => {
+  audits.forEach((audit) => {
     const { captainLogin, members } = audit.group;
-    const filteredMembers = members.filter(member => member.userLogin !== captainLogin);
-    
+    const filteredMembers = members.filter(
+      (member) => member.userLogin !== captainLogin
+    );
+
     auditItemsContainer.innerHTML += `
     <div class="audit-item">
       <div class="audit-header">
-        <span class="project-name">${audit.group.path.replace("/kisumu/module/", "")}</span>
+        <span class="project-name">${audit.group.path.replace(
+          "/kisumu/module/",
+          ""
+        )}</span>
         <span class="audit-code">CODE: ${audit.private.code}</span>
       </div>
       <div class="audit-details">
         <p><strong>Group Leader: </strong>${captainLogin}</p>
-        ${filteredMembers.length > 0 ? `
+        ${
+          filteredMembers.length > 0
+            ? `
         <p><strong>Group Members:</strong></p>
         <div class="member-tags">
-          ${filteredMembers.map(member => `<span class="member-tag">${member.userLogin}</span>`).join('')}
-        </div>` : ''}
+          ${filteredMembers
+            .map(
+              (member) => `<span class="member-tag">${member.userLogin}</span>`
+            )
+            .join("")}
+        </div>`
+            : ""
+        }
       </div>
     </div>`;
-});
-
-
+  });
 }
 function DisplaySkills(topicList) {
   const topFiveSkills = skillTypes
@@ -173,12 +176,28 @@ function DisplaySkills(topicList) {
 
 function renderLogin() {
   app.innerHTML = login();
+  sidebar.style.display = "none";
+  mainContent.style.display = "none";
+  rightSidebar.style.display = "none";
 
   const loginForm = document.getElementById("login-form");
-  loginForm.addEventListener("submit", handleLogin);
+  loginForm.addEventListener(
+    "submit",
+    async (event) =>
+      await handleLogin(event, sidebar, mainContent, rightSidebar, app)
+  );
 }
 
-function renderDashboard() {
+export async function renderDashboard(token) {
+  response = await fetchGraphQL(token);
+  currentUser = response.data.user[0];
+  goProjects = response.data.goItems;
+  jsProjects = response.data.jsItems;
+  rustProjects = response.data.rustItems;
+  skillTypes = response.data.skill_types[0].transactions_aggregate.nodes;
+  audits = currentUser.audits;
+
+
   const totalUp = currentUser.transactions.reduce((totalXP, transaction) => {
     return transaction.type === "up" ? totalXP + transaction.amount : totalXP;
   }, 0);
@@ -186,10 +205,10 @@ function renderDashboard() {
     return transaction.type === "down" ? totalXP + transaction.amount : totalXP;
   }, 0);
 
-  console.log(totalUp, totalDown)
   sidebar.innerHTML = leftSidebar(currentUser);
   mainContent.innerHTML = topBar() + statsCards() + scores();
-  rightSidebar.innerHTML = skills() + AuditRatio(totalUp, totalDown, currentUser.auditRatio);
+  rightSidebar.innerHTML =
+    skills() + AuditRatio(totalUp, totalDown, currentUser.auditRatio);
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
@@ -216,7 +235,9 @@ function formatXP(bytes) {
 }
 
 function doneProjectsCount() {
-  let transactions = currentUser.transactions.filter(transaction => transaction.type === "xp" );
+  let transactions = currentUser.transactions.filter(
+    (transaction) => transaction.type === "xp"
+  );
 
   // Create sets of completed project names for fast lookup
   let completedProjects = new Set();
@@ -226,7 +247,7 @@ function doneProjectsCount() {
       completedProjects.add(transactions[i].object.name);
     }
   }
-  console.log(completedProjects)
+  console.log(completedProjects);
 
   // Count completed projects for each language
   let goDone = 0;
