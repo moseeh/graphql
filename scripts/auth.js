@@ -1,4 +1,5 @@
-export async function handleLogin(event) {
+import { renderDashboard } from "./main.js";
+export async function handleLogin(event, sidebar, mainContent, rightSidebar, app) {
   event.preventDefault();
 
   const username = document.getElementById("username").value;
@@ -29,6 +30,12 @@ export async function handleLogin(event) {
     }
     const token = await response.json();
     localStorage.setItem("authToken", token);
+    sidebar.style.display = "block";
+    mainContent.style.display = "block";
+    rightSidebar.style.display = "block";
+    app.innerHTML = ""; // Clear login form
+
+    renderDashboard(token)
   } catch (error) {
     errorMessage.textContent = error.message;
     errorMessage.style.display = "block";
