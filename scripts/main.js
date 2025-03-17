@@ -64,7 +64,9 @@ function updateUI(done) {
   const notificationIndicator = document.querySelector(
     ".notification-indicator"
   );
-
+  const notificationContainer = document.querySelector(
+    ".notification-container"
+  );
   if (
     !goProjectsRatio ||
     !jsProjectsRatio ||
@@ -73,7 +75,8 @@ function updateUI(done) {
     !levelValue ||
     !gradeValue ||
     !topicList ||
-    !notificationIndicator
+    !notificationIndicator ||
+    !notificationContainer
   )
     return;
 
@@ -108,8 +111,39 @@ function updateUI(done) {
   } else {
     notificationIndicator.style.display = "none";
   }
-}
 
+  PopulateAuditDropdown()
+}
+function PopulateAuditDropdown() {
+  const auditItemsContainer = document.querySelector('.audit-items');
+  
+  if (audits.length === 0) {
+    auditItemsContainer.innerHTML = '<p class="no-audits">No audit notifications</p>';
+    return;
+  }
+  audits.forEach(audit => {
+    const { captainLogin, members } = audit.group;
+    const filteredMembers = members.filter(member => member.userLogin !== captainLogin);
+    
+    auditItemsContainer.innerHTML += `
+    <div class="audit-item">
+      <div class="audit-header">
+        <span class="project-name">${audit.group.path.replace("/kisumu/module/", "")}</span>
+        <span class="audit-code">CODE: ${audit.private.code}</span>
+      </div>
+      <div class="audit-details">
+        <p><strong>Group Leader: </strong>${captainLogin}</p>
+        ${filteredMembers.length > 0 ? `
+        <p><strong>Group Members:</strong></p>
+        <div class="member-tags">
+          ${filteredMembers.map(member => `<span class="member-tag">${member.userLogin}</span>`).join('')}
+        </div>` : ''}
+      </div>
+    </div>`;
+});
+
+
+}
 function DisplaySkills(topicList) {
   const topFiveSkills = skillTypes
     .sort((a, b) => b.amount - a.amount)
