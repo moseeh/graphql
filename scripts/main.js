@@ -4,7 +4,7 @@ import { handleLogin } from "./auth.js";
 import { fetchGraphQL } from "./queries.js";
 import { topBar, statsCards, scores } from "./templates/main_content.js";
 import { generateXPGraph } from "./graphs.js";
-import { skills, stats } from "./templates/rightSidebar.js";
+import { skills } from "./templates/rightSidebar.js";
 
 let app;
 let sidebar;
@@ -16,6 +16,7 @@ let goProjects;
 let jsProjects;
 let rustProjects;
 let skillTypes;
+let audits;
 
 let rank = [
   "Aspiring Developer",
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     jsProjects = response.data.jsItems;
     rustProjects = response.data.rustItems;
     skillTypes = response.data.skill_types[0].transactions_aggregate.nodes;
+    audits = currentUser.audits;
 
     renderDashboard();
   } else {
@@ -59,6 +61,9 @@ function updateUI(done) {
   const gradeValue = document.getElementById("grade-metric-value");
   const chartContainer = document.getElementById("chart-container");
   const topicList = document.getElementById("topic-list");
+  const notificationIndicator = document.querySelector(
+    ".notification-indicator"
+  );
 
   if (
     !goProjectsRatio ||
@@ -67,7 +72,8 @@ function updateUI(done) {
     !xpValue ||
     !levelValue ||
     !gradeValue ||
-    !topicList
+    !topicList ||
+    !notificationIndicator
   )
     return;
 
@@ -96,29 +102,38 @@ function updateUI(done) {
     response.data.event[0].endAt
   );
   DisplaySkills(topicList);
+
+  if (audits.length > 0) {
+    notificationIndicator.style.display = "block";
+  } else {
+    notificationIndicator.style.display = "none";
+  }
 }
 
 function DisplaySkills(topicList) {
   const topFiveSkills = skillTypes
     .sort((a, b) => b.amount - a.amount)
     .slice(0, 5)
-    .map(skill => ({
-      type: skill.type.replace('skill_', '').replace(/^prog$/, 'programming').replace(/^(\w)/, (match) => match.toUpperCase()),
-      amount: skill.amount
+    .map((skill) => ({
+      type: skill.type
+        .replace("skill_", "")
+        .replace(/^prog$/, "programming")
+        .replace(/^(\w)/, (match) => match.toUpperCase()),
+      amount: skill.amount,
     }));
 
-    for (let i=0; i< topFiveSkills.length; i++) {
-      let skill = topFiveSkills[i]
-      topicList.innerHTML += `
+  for (let i = 0; i < topFiveSkills.length; i++) {
+    let skill = topFiveSkills[i];
+    topicList.innerHTML += `
       <li class="topic-item">
       <div class="topic-info">
-        <div class="topic-number">0${i+1}</div>
+        <div class="topic-number">0${i + 1}</div>
         <div class="topic-name">${skill.type}</div>
       </div>
       <div class="topic-score high">${skill.amount}%</div>
     </li>
-      `
-    }
+      `;
+  }
 }
 
 function renderLogin() {
@@ -132,7 +147,7 @@ function renderDashboard() {
   //app.innerHTML = dashboard(currentUser);
   sidebar.innerHTML = leftSidebar(currentUser);
   mainContent.innerHTML = topBar() + statsCards() + scores();
-  rightSidebar.innerHTML = skills() + stats();
+  rightSidebar.innerHTML = skills();
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
