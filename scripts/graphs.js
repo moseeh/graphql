@@ -92,7 +92,6 @@ export function generateXPGraph(transactions, courseStartDate, courseEndDate) {
       label: formatXP(yp),
     });
   }
-  console.log(xAxisLabels, yAxisLabels)
 
   // Generate polyline points for the graph
   const polylinePoints = dataPoints
