@@ -19,6 +19,23 @@ export const query = `
       amount
       type
     }
+     audits(
+      order_by: {createdAt: desc}
+      where: {closedAt: {_is_null: true},group: {captain: {canAccessPlatform: {_eq: true}}}}
+    ) {
+      closedAt
+      group {
+        captainLogin
+        path
+        members {
+          userLogin
+        }
+      }
+      private {
+        code
+      }
+    }
+  
     events(where: {eventId: {_eq: 75}}) {
       level
     }
