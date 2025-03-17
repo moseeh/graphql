@@ -138,28 +138,138 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-
-
 .actions {
   display: flex;
   gap: 15px;
   align-items: center;
 }
+/* Notification container */
 .notification-container {
   position: relative;
   display: inline-block;
+  cursor: pointer;
 }
 
+/* Notification dot indicator */
 .notification-indicator {
   position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 8px;
-  height: 8px;
-  background-color: #0066ff;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background-color: #ff3b30; /* Red for better visibility */
   border-radius: 50%;
-  display: none; /* Change to 'none' when there are no notifications */
+  display: none;
+  box-shadow: 0 0 5px rgba(255, 59, 48, 0.5);
 }
+
+/* Notification dropdown */
+.notification-dropdown {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 320px;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  display: none; /* Hidden by default */
+  z-index: 100;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+/* Show dropdown on hover */
+.notification-container:hover .notification-dropdown {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Dropdown title */
+.notification-dropdown h3 {
+  color: #333;
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* Audit items container */
+.audit-items {
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* Individual audit item */
+.audit-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eaeaea;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.audit-item:last-child {
+  border-bottom: none;
+}
+
+/* Audit item hover effect */
+.audit-item:hover {
+  background-color: #f9f9ff;
+}
+
+/* Audit item header */
+.audit-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.project-name {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.audit-code {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Audit details */
+.audit-details p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Member tags */
+.member-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.member-tag {
+  background-color: #eef2ff;
+  color: #4f46e5;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Member tag hover effect */
+.member-tag:hover {
+  background-color: #d6d9ff;
+}
+
 .btn {
   padding: 10px 20px;
   border-radius: 50px;
@@ -223,7 +333,6 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
-
 
 .stat-card-icon {
   width: 40px;
@@ -618,7 +727,7 @@ body {
 }
 
 .metric-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -745,7 +854,7 @@ body {
   .metrics-container {
     grid-template-columns: 1fr;
   }
-  
+
   .dashboard-header {
     flex-direction: column;
     align-items: flex-start;
