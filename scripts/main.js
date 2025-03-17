@@ -15,6 +15,7 @@ let response;
 let goProjects;
 let jsProjects;
 let rustProjects;
+let skillTypes;
 
 let rank = [
   "Aspiring Developer",
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   app = document.getElementById("app");
   sidebar = document.getElementById("sidebar");
   mainContent = document.getElementById("main-content");
-  rightSidebar = document.getElementById("right-sidebar")
+  rightSidebar = document.getElementById("right-sidebar");
 
   //check if user is already logged in
   const token = localStorage.getItem("authToken");
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     goProjects = response.data.goItems;
     jsProjects = response.data.jsItems;
     rustProjects = response.data.rustItems;
+    skillTypes = response.data.skill_types[0].transactions_aggregate.nodes;
 
     renderDashboard();
   } else {
@@ -56,6 +58,7 @@ function updateUI(done) {
   const levelValue = document.getElementById("level-metric-value");
   const gradeValue = document.getElementById("grade-metric-value");
   const chartContainer = document.getElementById("chart-container");
+  const topicList = document.getElementById("topic-list");
 
   if (
     !goProjectsRatio ||
@@ -63,7 +66,8 @@ function updateUI(done) {
     !rsProjectsRatio ||
     !xpValue ||
     !levelValue ||
-    !gradeValue
+    !gradeValue ||
+    !topicList
   )
     return;
 
@@ -91,6 +95,30 @@ function updateUI(done) {
     response.data.event[0].startAt,
     response.data.event[0].endAt
   );
+  DisplaySkills(topicList);
+}
+
+function DisplaySkills(topicList) {
+  const topFiveSkills = skillTypes
+    .sort((a, b) => b.amount - a.amount)
+    .slice(0, 5)
+    .map(skill => ({
+      type: skill.type.replace('skill_', '').replace(/^prog$/, 'programming').replace(/^(\w)/, (match) => match.toUpperCase()),
+      amount: skill.amount
+    }));
+
+    for (let i=0; i< topFiveSkills.length; i++) {
+      let skill = topFiveSkills[i]
+      topicList.innerHTML += `
+      <li class="topic-item">
+      <div class="topic-info">
+        <div class="topic-number">0${i+1}</div>
+        <div class="topic-name">${skill.type}</div>
+      </div>
+      <div class="topic-score high">${skill.amount}%</div>
+    </li>
+      `
+    }
 }
 
 function renderLogin() {
@@ -104,7 +132,7 @@ function renderDashboard() {
   //app.innerHTML = dashboard(currentUser);
   sidebar.innerHTML = leftSidebar(currentUser);
   mainContent.innerHTML = topBar() + statsCards() + scores();
-  rightSidebar.innerHTML = skills() + stats()
+  rightSidebar.innerHTML = skills() + stats();
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
