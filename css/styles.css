@@ -6,8 +6,56 @@
 }
 
 body {
+  font-family: Arial, sans-serif;
   display: flex;
   background-color: #f5f5f7;
+}
+
+
+#login-container {
+  background: white;
+  padding: 2rem;
+  width: 320px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  color: rgb(124, 77, 255);
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #A589FF;
+  border-radius: 6px;
+  outline: none;
+}
+
+button {
+  background: rgb(124, 77, 255);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #9376FF;
+}
+
+#error-message {
+  color: red;
+  margin-bottom: 10px;
 }
 
 /* Sidebar styles */
@@ -235,7 +283,7 @@ body {
 }
 
 .audit-code {
-  font-size: 12px;
+  font-size: 17px;
   color: #666;
 }
 
