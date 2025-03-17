@@ -35,29 +35,7 @@ export const skills = () => `
     <div class="card-title">Best Skills</div>
   </div>
 
-  <ul class="topic-list">
-    <li class="topic-item">
-      <div class="topic-info">
-        <div class="topic-number">01</div>
-        <div class="topic-name">Cyber security basics</div>
-      </div>
-      <div class="topic-score high">92%</div>
-    </li>
-    <li class="topic-item">
-      <div class="topic-info">
-        <div class="topic-number">02</div>
-        <div class="topic-name">Covid protocols</div>
-      </div>
-      <div class="topic-score high">95%</div>
-    </li>
-    <li class="topic-item">
-      <div class="topic-info">
-        <div class="topic-number">03</div>
-        <div class="topic-name">Social media policies</div>
-      </div>
-      <div class="topic-score high">89%</div>
-    </li>
-  </ul>
+  <ul id="topic-list" class="topic-list"></ul>
 </div>
 `;
 
