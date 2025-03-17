@@ -4,7 +4,7 @@ import { handleLogin } from "./auth.js";
 import { fetchGraphQL } from "./queries.js";
 import { topBar, statsCards, scores } from "./templates/main_content.js";
 import { generateXPGraph } from "./graphs.js";
-import { skills } from "./templates/rightSidebar.js";
+import { AuditRatio, skills } from "./templates/rightSidebar.js";
 
 let app;
 let sidebar;
@@ -86,6 +86,7 @@ function updateUI(done) {
   const totalXP = currentUser.transactions.reduce((totalXP, transaction) => {
     return transaction.type === "xp" ? totalXP + transaction.amount : totalXP;
   }, 0);
+
   const totalGrade = currentUser.progresses.reduce((totalGrade, progress) => {
     return progress.grade !== null ? totalGrade + progress.grade : totalGrade;
   }, 0);
@@ -97,7 +98,7 @@ function updateUI(done) {
   levelValue.innerHTML =
     currentUser.events[0].level +
     '<span id="xp-metric-unit" class="metric-unit">' +
-    rank[Math.floor(currentUser.events[0].level) / 10] +
+    rank[Math.floor(currentUser.events[0].level / 10)] +
     "</span>";
   chartContainer.innerHTML = generateXPGraph(
     currentUser.transactions,
@@ -178,10 +179,17 @@ function renderLogin() {
 }
 
 function renderDashboard() {
-  //app.innerHTML = dashboard(currentUser);
+  const totalUp = currentUser.transactions.reduce((totalXP, transaction) => {
+    return transaction.type === "up" ? totalXP + transaction.amount : totalXP;
+  }, 0);
+  const totalDown = currentUser.transactions.reduce((totalXP, transaction) => {
+    return transaction.type === "down" ? totalXP + transaction.amount : totalXP;
+  }, 0);
+
+  console.log(totalUp, totalDown)
   sidebar.innerHTML = leftSidebar(currentUser);
   mainContent.innerHTML = topBar() + statsCards() + scores();
-  rightSidebar.innerHTML = skills();
+  rightSidebar.innerHTML = skills() + AuditRatio(totalUp, totalDown, currentUser.auditRatio);
 
   const logoutBtn = document.getElementById("logout-btn");
   logoutBtn.addEventListener("click", handleLogout);
@@ -208,7 +216,7 @@ function formatXP(bytes) {
 }
 
 function doneProjectsCount() {
-  let transactions = currentUser.transactions;
+  let transactions = currentUser.transactions.filter(transaction => transaction.type === "xp" );
 
   // Create sets of completed project names for fast lookup
   let completedProjects = new Set();
@@ -218,6 +226,7 @@ function doneProjectsCount() {
       completedProjects.add(transactions[i].object.name);
     }
   }
+  console.log(completedProjects)
 
   // Count completed projects for each language
   let goDone = 0;
