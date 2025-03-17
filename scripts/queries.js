@@ -52,6 +52,20 @@ export const query = `
     name
     type
   }
+  
+  skill_types: user {
+    transactions_aggregate(
+      distinct_on: [type]
+      where: {type: {_nin: ["xp", "level", "up", "down"]}}
+      order_by: [{type: asc}, {amount: desc}]
+    ) {
+      nodes {
+        type
+        amount
+      }
+    }
+  }
+
 }
 `;
 
