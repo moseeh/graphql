@@ -5,6 +5,7 @@ import { fetchGraphQL } from "./queries.js";
 import { topBar, statsCards, scores } from "./templates/main_content.js";
 import { generateXPGraph } from "./graphs.js";
 import { AuditRatio, skills } from "./templates/rightSidebar.js";
+import { updateMetrics } from "./utils.js";
 
 let app;
 let sidebar;
@@ -105,6 +106,7 @@ function updateUI(done) {
   }
 
   PopulateAuditDropdown();
+  updateMetrics(currentUser)
 }
 function PopulateAuditDropdown() {
   const auditItemsContainer = document.querySelector(".audit-items");
