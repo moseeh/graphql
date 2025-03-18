@@ -9,12 +9,14 @@ This project creates a personalized profile page that visualizes your progress a
 ## Features
 
 - **Authentication System**
+
   - Login with username or email
   - JWT-based authentication
   - Logout functionality
   - Error handling for invalid credentials
 
 - **Profile Information**
+
   - Basic user identification
   - XP amount tracking
   - Project grades display
@@ -34,7 +36,7 @@ This project creates a personalized profile page that visualizes your progress a
 - Authentication: JWT (JSON Web Tokens)
 - Data Fetching: GraphQL API
 - Data Visualization: SVG for custom graphs
-- Hosting: [Your chosen hosting platform]
+- Hosting: Github-Pages
 
 ## API Endpoints
 
@@ -51,11 +53,13 @@ This project creates a personalized profile page that visualizes your progress a
 ### Installation
 
 1. Clone the repository
+
    ```
    git clone https://learn.zone01kisumu.ke/git/moonyango/graphql
    ```
 
 2. Navigate to the project directory
+
    ```
    cd graphql
    ```
@@ -69,10 +73,9 @@ This project creates a personalized profile page that visualizes your progress a
 3. Explore your personalized profile dashboard
 4. Log out when finished
 
-
 ## Deployment
 
-This project is hosted on [Your hosting platform name] and can be accessed at [Your deployed URL].
+This project is hosted on github-pages and can be accessed at [\[graphql\]](https://moseeh.github.io/graphql/).
 
 ## Learning Objectives
 
@@ -81,10 +84,6 @@ This project is hosted on [Your hosting platform name] and can be accessed at [Y
 - SVG-based data visualization
 - User interface and experience design
 - Frontend web development best practices
-
-## License
-
-[Your chosen license]
 
 ## Acknowledgments
 
