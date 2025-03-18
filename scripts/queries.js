@@ -40,6 +40,8 @@ export const query = `
     progresses(where: {eventId: {_eq: 75}} order_by: {createdAt: desc}) {
       grade
       path
+      createdAt
+      updatedAt
     }
   }
   event(where: {path: {_eq: "/kisumu/module"}}) {
