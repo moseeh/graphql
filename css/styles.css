@@ -975,3 +975,195 @@ button:hover {
     gap: 15px;
   }
 }
+
+
+/* Responsive Media Queries */
+
+/* Large Screens (Desktops) */
+@media screen and (max-width: 1200px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .topics-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar {
+    flex: 0 0 280px;
+  }
+  
+  .right-sidebar {
+    flex: 0 0 350px;
+  }
+}
+
+/* Medium Screens (Tablets) */
+@media screen and (max-width: 992px) {
+  body {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    height: auto;
+    width: 100%;
+    flex: initial;
+    padding: 15px 0;
+  }
+  
+  .main-content {
+    height: auto;
+    padding: 15px;
+  }
+  
+  .right-sidebar {
+    display: none; /* Hide right sidebar on tablet */
+  }
+  
+  .stats-cards {
+    flex-direction: column;
+  }
+  
+  .metrics-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .user-card {
+    width: 90%;
+    max-width: 360px;
+  }
+}
+
+/* Small Screens (Mobile Landscape) */
+@media screen and (max-width: 768px) {
+  .menu-item {
+    padding: 10px 15px;
+  }
+  
+  .metrics-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .logo-text {
+    display: none;
+  }
+  
+  .chart-container {
+    padding: 15px;
+  }
+  
+  .section-title {
+    font-size: 20px;
+  }
+  
+  .card {
+    padding: 15px;
+  }
+  
+  .dashboard-title {
+    font-size: 20px;
+  }
+  
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* Extra Small Screens (Mobile Portrait) */
+@media screen and (max-width: 576px) {
+  .menu-icon {
+    margin-right: 0;
+  }
+  
+  .menu-item span {
+    display: none;
+  }
+  
+  .sidebar {
+    flex: 0 0 80px;
+    padding: 15px 0;
+  }
+  
+  .logo {
+    justify-content: center;
+    padding: 0 10px;
+  }
+  
+  .logo-icon {
+    margin-right: 0;
+  }
+  
+  .metric-value {
+    font-size: 24px;
+  }
+  
+  .user-card {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .notification-dropdown {
+    width: 280px;
+    right: -100px;
+  }
+  
+  .date-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .metric-card {
+    padding: 15px;
+  }
+  
+  #login-container {
+    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+/* Handle height for small devices */
+@media screen and (max-height: 700px) {
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .sidebar, .main-content {
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
+/* Print styles */
+@media print {
+  .sidebar, .right-sidebar, .actions, .btn {
+    display: none;
+  }
+  
+  body {
+    background-color: white;
+  }
+  
+  .main-content {
+    width: 100%;
+    padding: 0;
+  }
+  
+  .card, .stat-card, .metric-card {
+    box-shadow: none;
+    border: 1px solid #eee;
+  }
+}
