@@ -176,6 +176,7 @@ function DisplaySkills(topicList) {
 
 function renderLogin() {
   app.innerHTML = login();
+  app.style.display = "flex"
   sidebar.style.display = "none";
   mainContent.style.display = "none";
   rightSidebar.style.display = "none";
@@ -189,6 +190,7 @@ function renderLogin() {
 }
 
 export async function renderDashboard(token) {
+  app.style.display = "none"
   response = await fetchGraphQL(token);
   currentUser = response.data.user[0];
   goProjects = response.data.goItems;
@@ -196,7 +198,6 @@ export async function renderDashboard(token) {
   rustProjects = response.data.rustItems;
   skillTypes = response.data.skill_types[0].transactions_aggregate.nodes;
   audits = currentUser.audits;
-
 
   const totalUp = currentUser.transactions.reduce((totalXP, transaction) => {
     return transaction.type === "up" ? totalXP + transaction.amount : totalXP;

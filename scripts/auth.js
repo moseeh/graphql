@@ -35,6 +35,7 @@ export async function handleLogin(event, sidebar, mainContent, rightSidebar, app
     rightSidebar.style.display = "block";
     app.innerHTML = ""; // Clear login form
 
+
     renderDashboard(token)
   } catch (error) {
     errorMessage.textContent = error.message;
